@@ -1,0 +1,136 @@
+COPPIED FROM PA1
+
+# COP4533_PA_1
+
+**Programming Assignment 1: Matching and Verifying**
+
+## Authors
+
+Alexander Neil - 16230392
+
+Andrew Faircloth - 87943837
+
+## Getting Started
+
+### Installation
+
+Clone the repository
+
+```
+git clone https://github.com/andrewfaircloth/COP4533_PA_1
+```
+
+Navigate to the repository
+
+```
+cd COP4533_PA_1
+```
+
+### Matcher
+
+`src/matcher/matcher.py`
+
+The Matcher takes in a file with preferences of hospitals and students, and outputs a file contiaing a list of possible final matches
+
+```
+python src/matcher/matcher.py <preferences_file> <matches_file> 
+```
+
+Example:
+
+```
+python src/matcher/matcher.py data/examples/example1.in data/examples/example1.out
+```
+
+### Verifier
+
+`src/verifier/verifier.py`
+
+The Verifier takes in a file of preferences and matches and checks the validity of said matches. Along with the, the Verifier also checks for stability to ensure that there are no blocking pairs.
+
+```
+python src/verifier/verifier.py <preferences_file> <matches_file> 
+```
+
+Example:
+
+```
+python src/verifier/verifier.py data/examples/example1.in data/examples/example1.out
+```
+
+### Benchmark
+
+`src/benchmark.py`
+
+This Benchmark script generates a random input of N hospital preferences and N student preferences to run through out Matcher and Varifier in order to measure the runtimes of each implementation.
+
+```
+src/benchmark.py
+```
+
+## Input
+
+### <preferences_file> Format
+
+* First line: integer n (number of hospitals and students)
+* Next n lines: hospital preference list
+* Next n lines: student preference list
+
+Example Input:
+
+```
+3
+1 2 3
+2 3 1
+2 1 3
+2 1 3
+1 2 3
+1 2 3
+```
+
+Example Output:
+
+```
+1 2
+2 3
+3 1
+```
+
+### <matches_file> Format
+
+* n rows of matching pairs
+* pairs do not have to be valid or stable
+
+Example:
+
+```
+1 2
+2 3
+3 1
+```
+
+## Task C
+
+### Graph
+<img width="635" height="371" alt="image" src="https://github.com/user-attachments/assets/cdbcd28c-635f-43ce-a3e7-ecf0890d4037" />
+<img width="635" height="368" alt="image" src="https://github.com/user-attachments/assets/98b431fd-8f62-499c-8b81-15a0111ff7f5" />
+
+### Trend
+
+Looking at our data points (- means too small or N/A):
+
+| N | Matcher Time (s) | Growth Rate (compared to previous N) | Verifier Time (s) |  Growth Rate (compared to previous N) |
+| --- | --- | --- | --- | --- |
+| 1 | 0.002204 | - | 0.001303 | - |
+| 2 | 0.007583 | - | 0.001395 | - |
+| 4 | 0.008967 | - | 0.007997 | - |
+| 8 | 0.009004 | - | 0.007124 | - |
+| 16 | 0.009300 | - | 0.007440 | - |
+| 32 | 0.008673 | - | 0.008266 | - |
+| 64 | 0.011054 | 1.2 |  0.008842 | 1.1 |
+| 128 | 0.016651 | 1.5 | 0.010774 | 1.2 |
+| 256 | 0.028884 | 1.7 | 0.021537 | 2.0 |
+| 512 | 0.078741 | 2.7 | 0.053673 | 2.5 |
+| 1024 | 0.282086 | 3.6 | 0.167052 | 3.1 |
+
+We can see that our data is approaching a growth rate of 4x. This relationship means that our data is approaching a **<ins>relationship with O(n^2)</ins>** because each data point is close to 4 times larger than the one before it. With a low value of N, python overhead takes a majority of the computation time, meaning that each lower N data point is not measureable for growth rate because of the overhead dominates runtime.
