@@ -2,32 +2,66 @@ import sys
 import os
 import io
 
-def FIFO(inputfile, outputfile){
+def FIFO(inputfile):
     number_of_misses = 0
     return number_of_misses
-}
-    
-def LRU(inputfile, outputfile){
-    number_of_misses = 0
-    return number_of_misses
-}
 
-def OPTFF(inputfile, outputfile){
+    
+def LRU(inputfile):
     number_of_misses = 0
     return number_of_misses
-}
+
+
+def OPTFF(inputfile):
+    number_of_misses = 0
+    cache = set()
+
+    file = open(inputfile, 'r')
+    params = file.readline().strip().split()
+    data = file.readline().strip().split()
+    file.close()
+
+    # print(params)
+    # print(data)
+
+    capacity = int(params[0])
+    number_of_requests = int(params[1])
+
+    for index, request in enumerate(data):
+        if request in cache:
+            continue # hit
+            
+        number_of_misses += 1 # miss
+        cache.add(request)
+
+        if len(cache) > capacity: # evict
+            furthest = -1
+            evict = None
+            for item in cache:
+                if item == request:
+                    continue
+                try:
+                    next_index = data.index(item, index + 1)
+                except:
+                    next_index = sys.maxsize # not used again
+                if next_index > furthest:
+                    furthest = next_index
+                    evict = item
+            cache.remove(evict)
+
+    return number_of_misses
+
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: python cache.py <inputfile> <outputfile>")
+    if len(sys.argv) != 2:
+        print("Usage: python cache.py <inputfile>")
         sys.exit(1)
 
     inputfile = sys.argv[1]
-    outputfile = sys.argv[2]
 
-    FIFO_misses = FIFO(inputfile, outputfile)
-    LRU_misses = LRU(inputfile, outputfile)
-    OPTFF_misses = OPTFF(inputfile, outputfile)
+    FIFO_misses = FIFO(inputfile)
+    LRU_misses = LRU(inputfile)
+    OPTFF_misses = OPTFF(inputfile)
 
     # Your program must output:
     # FIFO  : <number_of_misses>
