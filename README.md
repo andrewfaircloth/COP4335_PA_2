@@ -72,5 +72,5 @@ OPTFF : 10
 ```
 
 ## Written Component
-
+[Written Portion](ProgrammingAssignment2_WrittenPortion.pdf)
 ******************* PDF HERE
