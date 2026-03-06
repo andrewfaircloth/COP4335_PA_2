@@ -46,7 +46,7 @@ python src/cache.py data/example1.in data/example1.out
 
 ### <input_file> Format
 
-* First line: <capacity of cache> <number of requests>
+* First line: (capacity of cache) (number of requests)
 * Second line: list of requests in order
 
 Example Input:
