@@ -24,7 +24,7 @@ Navigate to the repository
 cd ../COP4533_PA_2
 ```
 
-### Cache
+## Cache
 
 `src/cache.py`
 
@@ -57,7 +57,7 @@ Example Input:
 ```
 ## Output
 
-## <output_file> Format
+### <output_file> Format
 
 * First line: "FIFO:" followed by the number of cache misses using the replacement strategy
 * Second line: "LRU:" followed by the number of cache misses using the replacement strategy
