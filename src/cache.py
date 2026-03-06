@@ -16,7 +16,7 @@ def FIFO(inputfile):
     for i in range(int(params[1])):
         if data[i] not in cache:
             number_of_misses += 1
-            
+
             if len(cache) < int(params[0]):
                 cache.append(data[i])
             else:
@@ -99,11 +99,12 @@ def OPTFF(inputfile):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python cache.py <inputfile>")
+    if len(sys.argv) != 3:
+        print("Usage: python cache.py <inputfile> <outputfile>")
         sys.exit(1)
 
     inputfile = sys.argv[1]
+    outputfile = sys.argv[2]
 
     FIFO_misses = FIFO(inputfile)
     LRU_misses = LRU(inputfile)
@@ -118,6 +119,11 @@ def main():
     print(f"FIFO  : {FIFO_misses}")
     print(f"LRU   : {LRU_misses}")
     print(f"OPTFF : {OPTFF_misses}")
+
+    output_string = f"FIFO  : {FIFO_misses}\nLRU   : {LRU_misses}\nOPTFF : {OPTFF_misses}"
+
+    with open(outputfile, 'w') as f:
+        f.write(output_string)
     
     return 0
 
